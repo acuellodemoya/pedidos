@@ -1,0 +1,17 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %} Crear cliente {% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form | crispy}}
+        <input type="submit" name="crear usuario" class="btn btn-primary">
+    </form>
+</div>
+
+{% endblock %}

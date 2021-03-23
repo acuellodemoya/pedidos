@@ -47,10 +47,10 @@ class Orden(models.Model):
     producto = models.ForeignKey(Producto, null=True, on_delete=models.SET_NULL)
     creado = models.DateTimeField(auto_now_add=True, null=True)
     estado = models.CharField(max_length=255, null=True, choices=ESTADOS)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, null=True)
 
     
     def __str__(self):
-        return self.estado
+        return self.producto.nombre
 
 

@@ -23,9 +23,9 @@
                 <h4>Información de contacto</h4>
             </div>
             <div class="card card-body">
-                Email: 
+                <p>Email: {{ cliente.email }}</p>
                 <br>
-                Celular:
+                <p>Celular: {{ cliente.telefono }}</p>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
                 <h4>Total de ordenes</h4>
             </div>
             <div class="card card-body">
-
+                <h1 class="text-center mb-3">{{ numero_ordenes }}</h1>
             </div>
         </div>
     </div>
@@ -58,7 +58,15 @@
                     <th>Actualizar</th>
                     <th>Eliminar</th>
                 </tr>
-
+                {% for orden in ordenes %}
+                    <tr>
+                        <td>{{ orden.producto }}</td>
+                        <td>{{ orden.producto.categoria }}</td>
+                        <td>{{ orden.creado }}</td>
+                        <td><a href="#" class="btn btn-warning">Actualizar</a></td>
+                        <td><a href="#" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                {% endfor %}
             </table>
         </div>
     </div>

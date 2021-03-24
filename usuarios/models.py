@@ -48,7 +48,7 @@ class Orden(models.Model):
     creado = models.DateTimeField(auto_now_add=True, null=True)
     estado = models.CharField(max_length=255, null=True, choices=ESTADOS)
     tags = models.ManyToManyField(Tag, null=True)
-
+    nota = models.CharField(max_length=500, null=True)
     
     def __str__(self):
         return self.producto.nombre

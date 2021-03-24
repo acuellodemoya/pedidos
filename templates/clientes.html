@@ -41,9 +41,12 @@
 <br>
     <div class="row">
         <div class="col-md">
-            <a href="#" class="btn btn-primary">
-                Buscar
-            </a>
+            <div class="card card-body">
+                <form action="" method="GET">
+                    {{orden_filter.form}}
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </form>
+            </div>
         </div>
     </div>
 <br>

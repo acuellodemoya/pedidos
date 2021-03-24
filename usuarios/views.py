@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import OrdenForm, ClienteForm
+from .filters import OrdenFilter
 # Create your views here.
 
 def inicio(request):
@@ -27,11 +28,14 @@ def clientes(request, pk):
     cliente = Cliente.objects.get(id=pk)
     ordenes = cliente.orden_set.all()
     numero_ordenes = ordenes.count()
+    orden_filter = OrdenFilter(request.GET, queryset=ordenes)
+    ordenes = orden_filter.qs
 
     contexto = {
         'cliente': cliente,
         'ordenes': ordenes,
-        'numero_ordenes': numero_ordenes
+        'numero_ordenes': numero_ordenes,
+        'orden_filter': orden_filter
     }
     return render(request, 'clientes.html', contexto)
 

@@ -48,6 +48,30 @@ def crear_cliente(request):
     }
     return render(request, 'clienteForm.html', contexto)
 
+def actualizar_cliente(request, pk):
+    cliente = Cliente.objects.get(id=pk)
+    form = ClienteForm(instance=cliente)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    
+    contexto = {
+        'form' : form
+    }
+    return render(request, 'clienteForm.html', contexto)
+
+def eliminar_cliente(request, pk):
+    cliente = Cliente.objects.get(id=pk)
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect('/')
+    contexto = {
+        'cliente': cliente
+    }
+    return render(request, 'eliminar_cliente.html', contexto)
+
 def crear_orden(request):
     form = OrdenForm()
     if request.method == 'POST':

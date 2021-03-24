@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from usuarios.views import inicio, productos, clientes, crear_orden, actualizar_orden, eliminar_orden, crear_cliente
+from usuarios.views import inicio, productos, clientes, crear_orden, actualizar_orden, eliminar_orden, crear_cliente, actualizar_cliente, eliminar_cliente
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,6 @@ urlpatterns = [
     path('actualizar_orden/<str:pk>', actualizar_orden, name='actualizar_orden'),
     path('eliminar_orden/<str:pk>', eliminar_orden, name='eliminar_orden'),
     path('crear_cliente/', crear_cliente, name='crear_cliente'),
+    path('actualizar_cliente/<str:pk>', actualizar_cliente, name='actualizar_cliente'),
+    path('eliminar_cliente/<str:pk>', eliminar_cliente, name='eliminar_cliente'),
 ]

@@ -8,11 +8,11 @@
                 <h4>Cliente</h4>
             </div>
             <div class="card card-body">
-                <a href="#" class="btn btn-outline-primary">
+                <a href="{% url 'actualizar_cliente' cliente.id %}" class="btn btn-outline-primary">
                     Actualizar cliente
                 </a>
                 <br>
-                <a href="#" class="btn btn-outline-danger">
+                <a href="{% url 'eliminar_cliente' cliente.id %}" class="btn btn-outline-danger">
                     Eliminar cliente
                 </a>
             </div>

@@ -1,5 +1,8 @@
 from django import forms
 from .models import Orden, Cliente
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
 
 
 class OrdenForm(forms.ModelForm):
@@ -8,8 +11,7 @@ class OrdenForm(forms.ModelForm):
         model = Orden
         fields = '__all__'
 
-class ClienteForm(forms.ModelForm):
+class CrearUsuarioForm(UserCreationForm):
     class Meta:
-
-        model = Cliente
-        fields = ['nombre', 'telefono', 'email']
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']

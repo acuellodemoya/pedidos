@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import OrdenForm, ClienteForm
+from .forms import OrdenForm, CrearUsuarioForm
 from .filters import OrdenFilter
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required(login_url='login')
 def inicio(request):
     clientes = Cliente.objects.all()
     ordenes = Orden.objects.all()
@@ -39,19 +44,48 @@ def clientes(request, pk):
     }
     return render(request, 'clientes.html', contexto)
 
-def crear_cliente(request):
-    form = ClienteForm()
-    if request.method == 'POST':
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    
-    contexto = {
-        'form': form
-    }
-    return render(request, 'clienteForm.html', contexto)
+def registro(request):
+    if request.user.is_authenticated:
+        return redirect('inicio')
+    else:
+        form = CrearUsuarioForm()
+        if request.method == 'POST':
+            form = CrearUsuarioForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Cuenta Creada!!')
+                return redirect('login')
 
+        contexto = {
+            'form': form
+        }
+
+        return render(request, 'registro.html', contexto)
+
+def log_in(request):
+    if request.user.is_authenticated:
+        return redirect('inicio')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('inicio')
+            else:
+                messages.info(request, 'Usuario o cotrasena incorrectos!!')
+
+
+        return render(request, 'login.html')
+
+def log_out(request):
+    logout(request)
+    return redirect('login')
+
+@login_required(login_url='login')
 def actualizar_cliente(request, pk):
     cliente = Cliente.objects.get(id=pk)
     form = ClienteForm(instance=cliente)
@@ -66,6 +100,7 @@ def actualizar_cliente(request, pk):
     }
     return render(request, 'clienteForm.html', contexto)
 
+@login_required(login_url='login')
 def eliminar_cliente(request, pk):
     cliente = Cliente.objects.get(id=pk)
     if request.method == 'POST':
@@ -76,6 +111,7 @@ def eliminar_cliente(request, pk):
     }
     return render(request, 'eliminar_cliente.html', contexto)
 
+@login_required(login_url='login')
 def crear_orden(request):
     form = OrdenForm()
     if request.method == 'POST':
@@ -89,6 +125,7 @@ def crear_orden(request):
     }
     return render(request, 'ordenForm.html', contexto)
 
+@login_required(login_url='login')
 def actualizar_orden(request, pk):
 
     orden =Orden.objects.get(id=pk)
@@ -104,7 +141,7 @@ def actualizar_orden(request, pk):
     }
 
     return render(request, 'ordenForm.html', contexto)
-
+@login_required(login_url='login')
 def eliminar_orden(request, pk):
     orden = Orden.objects.get(id=pk)
     if request.method == 'POST':

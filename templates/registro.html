@@ -6,12 +6,13 @@
 
 {% block content %}
 <div class="container">
+    <h1>Registro</h1>
     <form action="" method="POST">
         {% csrf_token %}
 
-        {{ form | crispy}}
-        <input type="submit" name="crear usuario" class="btn btn-primary">
+        {{ form | crispy }}
+
+        <input type="submit" name="Registrar" class="btn btn-primary ">
     </form>
 </div>
-
 {% endblock %}
